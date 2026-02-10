@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { PortalComponent } from './components/portal/portal.component';
 import { PdfSignerComponent } from './components/pdf-signer/pdf-signer.component';
 import { SendSignatureComponent } from './components/send-signature/send-signature.component';
+import { UploadComponent } from './components/upload/upload.component';
 
 export const routes: Routes = [
     {
@@ -15,5 +16,9 @@ export const routes: Routes = [
     {
         path: "send-signature",
         component: SendSignatureComponent
+    },
+    {
+        path: "upload/:name",
+        component: UploadComponent
     }
 ];

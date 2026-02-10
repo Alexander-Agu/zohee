@@ -6,6 +6,7 @@ import { DocumentApiService } from '../../services/documents/document-api.servic
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
 
+
 @Component({
   selector: 'app-pdf-signer',
   standalone: true,
@@ -28,7 +29,8 @@ export class PdfSignerComponent implements OnInit {
     this.documentApi.getDocumentPdf(this.title)
       .subscribe((blob: Blob) => {
         this.pdfSrc = URL.createObjectURL(blob);
-      });
+    });
   }
 
+  save(){}
 }
