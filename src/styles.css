@@ -1,1 +1,61 @@
 /* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Container for the viewer to match Deskflo's clean cards */
+.pdf-container {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
+    background: white;
+}
+
+/* Target the internal toolbar */
+ngx-extended-pdf-viewer ::ng-deep #toolbarViewer {
+    background-color: #ffffff !important;
+    background-image: none !important;
+    border-bottom: 1px solid #edf2f7 !important;
+    height: 56px !important;
+    display: flex;
+    align-items: center;
+    padding: 0 16px !important;
+}
+
+/* Style the buttons to look like Deskflo's UI */
+ngx-extended-pdf-viewer ::ng-deep .toolbarButton,
+ngx-extended-pdf-viewer ::ng-deep .secondaryToolbarButton {
+    background: transparent !important;
+    border-radius: 6px !important;
+    color: #4a5568 !important;
+    /* Deskflo text gray */
+    transition: all 0.2s ease;
+    border: 1px solid transparent !important;
+}
+
+ngx-extended-pdf-viewer ::ng-deep .toolbarButton:hover {
+    background-color: #f7fafc !important;
+    color: #1A73E8 !important;
+    /* Deskflo Blue */
+}
+
+/* Highlight the primary actions (like Download/Print) */
+ngx-extended-pdf-viewer ::ng-deep #download,
+ngx-extended-pdf-viewer ::ng-deep #print {
+    background-color: #1A73E8 !important;
+    color: white !important;
+    margin-left: 8px !important;
+}
+
+ngx-extended-pdf-viewer ::ng-deep #download:hover {
+    background-color: #1557b0 !important;
+}
+
+/* Input fields (Page number) */
+ngx-extended-pdf-viewer ::ng-deep .toolbarField.pageNumber {
+    border-radius: 4px !important;
+    border: 1px solid #e2e8f0 !important;
+    padding: 4px !important;
+    background: #f8fafc !important;
+}

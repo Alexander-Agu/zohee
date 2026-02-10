@@ -1,0 +1,58 @@
+<section class="relative flex flex-col items-center justify-center
+ w-full h-[100dvh] bg-slate-50 font-sans">
+
+    <!-- Main Navigation buttons -->
+    <div class="flex flex-wrap items-center justify-center gap-8 p-6">
+        
+        <a routerLink="send-signature"
+            class="group flex flex-col items-center justify-center 
+            w-[280px] h-[220px] bg-white border border-blue-100 rounded-3xl shadow-sm 
+            transition-all duration-300 hover:shadow-xl hover:-translate-y-2 hover:border-blue-500"
+        >
+
+            <div
+                class="mb-4 p-4 rounded-full bg-blue-50 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                </svg>
+            </div>
+            <span class="text-xl font-semibold text-slate-700 group-hover:text-blue-700">Send for signature</span>
+        </a>
+
+        <button
+            class="group flex flex-col items-center justify-center w-[280px] h-[220px] bg-white border border-blue-100 rounded-3xl shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-2 hover:border-blue-500">
+            <div
+                class="mb-4 p-4 rounded-full bg-blue-50 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                </svg>
+            </div>
+            <span class="text-xl font-semibold text-slate-700 group-hover:text-blue-700">Sign for yourself</span>
+        </button>
+    </div>
+
+    <!-- Basic nafivation nav -->
+    <nav
+        class="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center justify-between
+            w-[90%] max-w-[600px] h-[72px] px-8 bg-slate-900 
+            text-white rounded-full shadow-2xl backdrop-blur-md bg-opacity-95"
+        >
+            <a routerLink=""
+                class="text-sm font-medium opacity-70 hover:opacity-100 transition-opacity flex flex-col items-center">
+                <span>Home</span>
+            </a>
+            <a routerLink="" class="text-sm font-medium opacity-70 hover:opacity-100 transition-opacity">
+                <span>Documents</span>
+            </a>
+            <a routerLink="send-sign" class="text-sm font-medium opacity-70 hover:opacity-100 transition-opacity">
+                <span>SendSign</span>
+            </a>
+            <a routerLink="" class="text-sm font-medium opacity-70 hover:opacity-100 transition-opacity">
+                <span>SignYourself</span>
+            </a>
+    </nav>
+</section>

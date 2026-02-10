@@ -1,0 +1,6 @@
+pdf-viewer,
+.ng2-pdf-viewer-container,
+.pdfViewer {
+  overflow: visible !important;
+  height: auto !important;
+}

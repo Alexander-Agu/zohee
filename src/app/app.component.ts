@@ -1,16 +1,23 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { PdfSignerComponent } from "./components/pdf-signer/pdf-signer.component";
+import { PortalComponent } from "./components/portal/portal.component";
+import { SendSignatureComponent } from "./components/send-signature/send-signature.component";
+import { RouterLink, RouterOutlet } from '@angular/router';
+
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [
+    PdfSignerComponent, 
+    PortalComponent, 
+    SendSignatureComponent,
+    RouterOutlet,
+    RouterLink
+  ],
   template: `
-    <h1>Welcome to {{title}}!</h1>
-
     <router-outlet />
-  `,
-  styleUrl: './app.component.css'
+  `
 })
-export class AppComponent {
-  title = 'zohee';
-}
+export class AppComponent {}
+

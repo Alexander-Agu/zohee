@@ -25,9 +25,12 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
+              "src/favicon.ico",
+              "src/assets",
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "node_modules/ngx-extended-pdf-viewer/assets/",
+                "output": "assets/"
               }
             ],
             "styles": [
@@ -96,5 +99,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "afab1e80-462b-4bcf-93a4-10c13de0a652"
   }
 }
