@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common'; // Important for @if and @for
 import { DocumentApiService } from '../../services/documents/document-api.service';
 
@@ -14,12 +14,16 @@ export class PortalComponent implements OnInit {
   documents: any[] = [];
   filterStatus: 'all' | 'signed' | 'not-signed' = 'all';
 
-  constructor(private documentApi: DocumentApiService) {}
+  constructor(private documentApi: DocumentApiService, private router: Router) {}
 
   ngOnInit(): void {
     this.documentApi.getAllDocument().subscribe((docs) => {
       this.documents = docs;
     });
+  }
+
+  viewDocument(name: string){
+    this.router.navigate(["pdf-signer", name]);
   }
 
   // Getter to handle filtering in the template

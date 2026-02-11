@@ -53,7 +53,7 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     @for (doc of filteredDocuments; track doc.id) {
-                    <div
+                    <div (click)="viewDocument(doc.fileName)"
                         class="bg-white border border-slate-200 p-5 rounded-none shadow-sm hover:border-blue-400 transition-colors group cursor-pointer relative">
                         <div class="absolute top-4 right-4">
                             <span
