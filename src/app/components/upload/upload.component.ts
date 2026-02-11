@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-upload',
-  imports: [ɵInternalFormsSharedModule],
+  imports: [ɵInternalFormsSharedModule, ReactiveFormsModule],
   templateUrl: "./upload.component.html",
   styleUrl: './upload.component.css'
 })
