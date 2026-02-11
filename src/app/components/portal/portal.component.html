@@ -1,56 +1,68 @@
 <section class="flex w-full h-[100dvh] bg-slate-50 font-sans text-slate-900">
+
+    <!-- SideBar -->
     <nav class="w-64 h-full bg-white border-r border-slate-200 flex flex-col p-6 shadow-sm">
-        <div class="mb-10">
+        <div class="mb-10 flex items-center gap-2 px-2">
+            <div class="w-6 h-6 bg-blue-600 rounded-sm"></div>
             <h2 class="text-xl font-bold text-slate-900 uppercase tracking-wider">Docu Sign</h2>
         </div>
+
         <ul class="space-y-1">
             <li>
-                <a href="#"
-                    class="flex items-center px-4 py-2 rounded-sm text-slate-600 font-medium hover:bg-slate-100">Templates</a>
+                <button (click)="setView('documents')"
+                    [class]="viewMode === 'documents' ? 'bg-slate-900 text-white shadow-md' : 'text-slate-600 hover:bg-slate-100'"
+                    class="w-full flex items-center px-4 py-2.5 rounded-sm font-medium transition-all text-sm uppercase tracking-tight">
+                    Documents
+                </button>
             </li>
             <li>
-                <a href="#"
-                    class="flex items-center px-4 py-2 rounded-sm bg-slate-900 text-white font-medium shadow-sm">Documents</a>
+                <button (click)="setView('templates')"
+                    [class]="viewMode === 'templates' ? 'bg-slate-900 text-white shadow-md' : 'text-slate-600 hover:bg-slate-100'"
+                    class="w-full flex items-center px-4 py-2.5 rounded-sm font-medium transition-all text-sm uppercase tracking-tight">
+                    Templates
+                </button>
             </li>
         </ul>
     </nav>
 
     <main class="flex-1 flex flex-col min-w-0 overflow-hidden">
-
+        <!-- HEADER -->
         <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-10 shrink-0">
-            <h1 class="text-lg font-bold text-slate-800">My Documents</h1>
+            <div class="flex items-center gap-3">
+                <span class="text-slate-400 font-medium text-sm">Dashboard /</span>
+                <h1 class="text-sm font-bold text-slate-900 uppercase tracking-widest">
+                    {{ viewMode === 'documents' ? 'Document Manager' : 'Template Library' }}
+                </h1>
+            </div>
 
-            <button
-                class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-sm text-sm font-bold transition-all active:scale-95 shadow-sm">
+            <button (click)="toTemplate()"
+                class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-sm text-xs font-black transition-all active:scale-95 shadow-sm uppercase tracking-widest">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
                 </svg>
-                CREATE NEW
+                Create Template
             </button>
         </header>
+
 
         <section class="flex-1 p-10 overflow-y-auto">
             <div class="max-w-6xl mx-auto">
 
-                <div class="flex items-center border-b border-slate-200 mb-8">
+                @if (viewMode === 'documents') {
+                <div class="flex items-center gap-8 mb-8 border-b border-slate-200">
                     <button (click)="setFilter('all')"
-                        [class]="filterStatus === 'all' ? 'border-b-2 border-blue-600 text-blue-600' : 'text-slate-500 hover:text-slate-800'"
-                        class="px-6 py-3 text-sm font-semibold transition-all">
-                        All
-                    </button>
+                        [class]="filterStatus === 'all' ? 'border-b-2 border-blue-600 text-blue-600' : 'text-slate-400'"
+                        class="pb-3 text-xs font-bold uppercase tracking-widest transition-all">All</button>
                     <button (click)="setFilter('signed')"
-                        [class]="filterStatus === 'signed' ? 'border-b-2 border-blue-600 text-blue-600' : 'text-slate-500 hover:text-slate-800'"
-                        class="px-6 py-3 text-sm font-semibold transition-all">
-                        Signed
-                    </button>
+                        [class]="filterStatus === 'signed' ? 'border-b-2 border-blue-600 text-blue-600' : 'text-slate-400'"
+                        class="pb-3 text-xs font-bold uppercase tracking-widest transition-all">Signed</button>
                     <button (click)="setFilter('not-signed')"
-                        [class]="filterStatus === 'not-signed' ? 'border-b-2 border-blue-600 text-blue-600' : 'text-slate-500 hover:text-slate-800'"
-                        class="px-6 py-3 text-sm font-semibold transition-all">
-                        Pending
-                    </button>
+                        [class]="filterStatus === 'not-signed' ? 'border-b-2 border-blue-600 text-blue-600' : 'text-slate-400'"
+                        class="pb-3 text-xs font-bold uppercase tracking-widest transition-all">Pending</button>
                 </div>
 
+                <!-- Documets -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     @for (doc of filteredDocuments; track doc.id) {
                     <div (click)="viewDocument(doc.fileName)"
@@ -58,23 +70,55 @@
                         <div class="absolute top-4 right-4">
                             <span
                                 [class]="doc.isSigned ? 'bg-green-50 text-green-700 border-green-200' : 'bg-amber-50 text-amber-700 border-amber-200'"
-                                class="text-[10px] uppercase font-bold px-2 py-0.5 border">
+                                class="text-[9px] uppercase font-bold px-2 py-0.5 border">
                                 {{ doc.isSigned ? 'Signed' : 'Pending' }}
                             </span>
                         </div>
                         <div
-                            class="w-10 h-10 bg-slate-50 text-slate-400 flex items-center justify-center mb-4 group-hover:text-blue-600 transition-colors border border-slate-100">
+                            class="w-10 h-10 bg-slate-50 text-slate-400 flex items-center justify-center mb-4 border border-slate-100 group-hover:text-blue-600">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                             </svg>
                         </div>
-                        <h3 class="text-md font-bold text-slate-800 truncate">{{ doc.documentTitle }}</h3>
-                        <p class="text-xs text-slate-500 mt-1">{{ doc.name }}</p>
+                        <h3 class="text-sm font-bold text-slate-800 truncate">{{ doc.documentTitle }}</h3>
+                        <p class="text-[10px] text-slate-400 uppercase mt-1">{{ doc.name }}</p>
                     </div>
                     }
                 </div>
+                }
+
+                <!-- Templates -->
+                @if (viewMode === 'templates') {
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    @for (doc of onlyTemplates; track doc.id) {
+                    <div
+                        class="bg-white border border-slate-200 p-6 rounded-none shadow-sm hover:border-blue-600 transition-all group cursor-pointer relative">
+                        <div class="absolute top-4 right-4">
+                            <span
+                                class="text-[9px] tracking-widest uppercase font-black px-2 py-0.5 bg-slate-900 text-white border border-slate-900">Master</span>
+                        </div>
+                        <div
+                            class="w-10 h-10 bg-slate-50 text-slate-900 flex items-center justify-center mb-6 border border-slate-200 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600 transition-all">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+                            </svg>
+                        </div>
+                        <h3 class="text-sm font-bold text-slate-800 truncate uppercase tracking-tight">{{
+                            doc.documentTitle }}</h3>
+                        <div class="mt-6 flex items-center justify-between">
+                            <span
+                                class="text-[10px] font-black text-blue-600 opacity-0 group-hover:opacity-100 transition-opacity uppercase tracking-widest">Use
+                                Template →</span>
+                        </div>
+                    </div>
+                    }
+                </div>
+                }
+
             </div>
         </section>
     </main>

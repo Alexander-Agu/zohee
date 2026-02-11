@@ -3,6 +3,7 @@ import { PortalComponent } from './components/portal/portal.component';
 import { PdfSignerComponent } from './components/pdf-signer/pdf-signer.component';
 import { SendSignatureComponent } from './components/send-signature/send-signature.component';
 import { UploadComponent } from './components/upload/upload.component';
+import { TemplaateComponent } from './components/templaate/templaate.component';
 
 export const routes: Routes = [
     {
@@ -25,5 +26,9 @@ export const routes: Routes = [
     {
         path: "upload/:name",
         component: UploadComponent
+    },
+    {
+        path: "template",
+        component: TemplaateComponent
     }
 ];

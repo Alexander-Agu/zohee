@@ -66,4 +66,5 @@ export interface Document {
   fileName: string;
   email: string;
   isSigned: boolean;
+  isTemplate: boolean
 }

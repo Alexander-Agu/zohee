@@ -13,6 +13,7 @@ import { DocumentApiService } from '../../services/documents/document-api.servic
 export class PortalComponent implements OnInit {
   documents: any[] = [];
   filterStatus: 'all' | 'signed' | 'not-signed' = 'all';
+  viewMode: 'documents' | 'templates' = 'documents';
 
   constructor(private documentApi: DocumentApiService, private router: Router) {}
 
@@ -26,11 +27,25 @@ export class PortalComponent implements OnInit {
     this.router.navigate(["pdf-signer", name]);
   }
 
-  // Getter to handle filtering in the template
+  toTemplate(){[
+    this.router.navigate(["template"])
+  ]}
+
+// Filtered list for documents only
   get filteredDocuments() {
-    if (this.filterStatus === 'signed') return this.documents.filter(d => d.isSigned);
-    if (this.filterStatus === 'not-signed') return this.documents.filter(d => !d.isSigned);
-    return this.documents;
+    const docs = this.documents.filter(d => !d.isTemplate); // Future logic
+    if (this.filterStatus === 'signed') return docs.filter(d => d.isSigned);
+    if (this.filterStatus === 'not-signed') return docs.filter(d => !d.isSigned);
+    return docs;
+  }
+
+  // Simulated list for templates
+  get onlyTemplates() {
+    return this.documents.filter(x => x.isTemplate);
+  }
+
+  setView(mode: 'documents' | 'templates') {
+    this.viewMode = mode;
   }
 
   setFilter(status: 'all' | 'signed' | 'not-signed') {
