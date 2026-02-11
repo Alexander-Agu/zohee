@@ -1,3 +1,60 @@
-<main>
-    <h2>Create your template</h2>
+<main class="min-h-screen bg-slate-50 flex flex-col items-center py-12 px-6 font-sans text-slate-900">
+    <div class="w-full max-w-xl">
+
+        <button (click)="goBack()"
+            class="flex items-center gap-2 text-slate-400 hover:text-slate-900 transition-colors mb-8 group">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 transition-transform group-hover:-translate-x-1"
+                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
+            </svg>
+            <b class="text-xs uppercase tracking-widest">Back to Dashboard</b>
+        </button>
+
+        <div class="bg-white border border-slate-200 p-10 shadow-sm">
+            <h2 class="text-2xl font-black uppercase tracking-tight text-slate-900 mb-8">
+                Create your template
+            </h2>
+
+            <form class="space-y-8" [formGroup]="templateForm" (ngSubmit)="createTemplate()">
+
+                <!-- FILE -->
+                <div class="flex flex-col gap-2">
+                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-500">
+                        Import Document
+                    </label>
+
+                    <div class="relative group">
+                        <input type="file" (change)="onFileChange($event)"
+                            class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
+
+                        <div
+                            class="border-2 border-dashed border-slate-200 group-hover:border-blue-400 group-hover:bg-blue-50/30 transition-all p-8 flex flex-col items-center justify-center gap-3">
+                            Click to upload or drag and drop
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TITLE -->
+                <div class="flex flex-col gap-2">
+                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-500">
+                        Document Title
+                    </label>
+
+                    <input type="text" formControlName="documentTitle" placeholder="e.g. Standard Employment Contract"
+                        class="w-full border border-slate-200 px-4 py-3 text-sm" />
+                </div>
+
+                <!-- SUBMIT -->
+                <button type="submit" class="w-full bg-blue-600 text-white py-4">
+                    Create Template
+                </button>
+
+            </form>
+
+        </div>
+
+        <p class="text-center mt-8 text-[10px] text-slate-400 uppercase tracking-widest">
+            Templates are master copies and cannot be edited once signed.
+        </p>
+    </div>
 </main>

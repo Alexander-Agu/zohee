@@ -1,61 +1,95 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { DocumentApiService } from '../../services/documents/document-api.service';
 import { Location } from '@angular/common';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-send-signature',
-  imports: [ReactiveFormsModule],
-  templateUrl: "./send.signature.component.html",
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    PdfViewerModule,
+    RouterLink
+  ],
+  templateUrl: './send.signature.component.html',
   styleUrl: './send-signature.component.css'
 })
-export class SendSignatureComponent {
-  // Initialize form with validators for better UX
+export class SendSignatureComponent implements OnInit, OnDestroy {
   documentForm = new FormGroup({
-    documentTitle: new FormControl("", [Validators.required]),
-    userName: new FormControl("", [Validators.required]),
-    phoneNumber: new FormControl("", [Validators.required]),
-    email: new FormControl("", [Validators.required]),
-    file: new FormControl<File | null>(null, [Validators.required])
+    documentTitle: new FormControl('', [Validators.required]),
+    userName: new FormControl('', [Validators.required]),
+    phoneNumber: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required]),
   });
 
+  title = '';
+  pdfSrc = '';
+
+  // file created from backend blob
+  private fetchedFile: File | null = null;
+
   constructor(
-    private post: DocumentApiService,
-    private location: Location
+    private documentApi: DocumentApiService,
+    private location: Location,
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
-  goBack(){
-    this.location.back();
+
+  ngOnInit(): void {
+    this.title = this.route.snapshot.paramMap.get('name') ?? '';
+
+    this.documentForm.patchValue({
+      documentTitle: this.title
+    });
+
+    this.documentApi.getDocumentPdf(this.title)
+      .subscribe((blob: Blob) => {
+
+        // display pdf
+        this.pdfSrc = URL.createObjectURL(blob);
+
+        // convert blob -> file for FormData
+        this.fetchedFile = new File(
+          [blob],
+          `${this.title}.pdf`,
+          { type: 'application/pdf' }
+        );
+      });
   }
 
-  onFileChange(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      // Patch the actual File object into the form
-      this.documentForm.patchValue({ file: file });
+  // Clean up memory
+  ngOnDestroy(): void {
+    if (this.pdfSrc) {
+      URL.revokeObjectURL(this.pdfSrc);
     }
   }
 
-  onSubmit() {
-    if (this.documentForm.valid) {
-      const formData = new FormData();
 
-      console.log("Hey")
+  goBack(): void {
+    this.router.navigate(['']);
+  }
 
-      // Map form values to the exact names in your C# [FromForm] attributes
-      formData.append('userName', this.documentForm.get('userName')?.value || '');
-      formData.append('phoneNumber', this.documentForm.get('phoneNumber')?.value || '');
-      formData.append('email', this.documentForm.get('email')?.value || '');
-      formData.append('documentTitle', this.documentForm.get('documentTitle')?.value || '');
-      
-      const file = this.documentForm.get('file')?.value;
-      if (file) {
-        formData.append('file', file);
-      }
 
-      this.post.PostDocument(formData);
-    } else {
+  onSubmit(): void {
+
+    if (!this.documentForm.valid || !this.fetchedFile) {
       this.documentForm.markAllAsTouched();
+      return;
     }
+
+    const formData = new FormData();
+
+    formData.append('userName', this.documentForm.get('userName')?.value ?? '');
+    formData.append('phoneNumber', this.documentForm.get('phoneNumber')?.value ?? '');
+    formData.append('email', this.documentForm.get('email')?.value ?? '');
+    formData.append('documentTitle', this.title);
+
+    // attach fetched file
+    formData.append('file', this.fetchedFile);
+
+    this.documentApi.PostDocument(formData)
   }
 }

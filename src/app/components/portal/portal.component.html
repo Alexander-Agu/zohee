@@ -4,7 +4,7 @@
     <nav class="w-64 h-full bg-white border-r border-slate-200 flex flex-col p-6 shadow-sm">
         <div class="mb-10 flex items-center gap-2 px-2">
             <div class="w-6 h-6 bg-blue-600 rounded-sm"></div>
-            <h2 class="text-xl font-bold text-slate-900 uppercase tracking-wider">Docu Sign</h2>
+            <h2 class="text-xl font-bold text-slate-900 uppercase tracking-wider">Zohee Signatures</h2>
         </div>
 
         <ul class="space-y-1">
@@ -93,7 +93,7 @@
                 @if (viewMode === 'templates') {
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     @for (doc of onlyTemplates; track doc.id) {
-                    <div
+                    <div (click)="toSendDocument(doc.fileName)"
                         class="bg-white border border-slate-200 p-6 rounded-none shadow-sm hover:border-blue-600 transition-all group cursor-pointer relative">
                         <div class="absolute top-4 right-4">
                             <span
@@ -109,11 +109,6 @@
                         </div>
                         <h3 class="text-sm font-bold text-slate-800 truncate uppercase tracking-tight">{{
                             doc.documentTitle }}</h3>
-                        <div class="mt-6 flex items-center justify-between">
-                            <span
-                                class="text-[10px] font-black text-blue-600 opacity-0 group-hover:opacity-100 transition-opacity uppercase tracking-widest">Use
-                                Template →</span>
-                        </div>
                     </div>
                     }
                 </div>

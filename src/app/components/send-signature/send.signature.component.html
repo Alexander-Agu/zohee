@@ -1,134 +1,56 @@
-<section class="relative w-full h-[100dvh] bg-slate-50 
-    flex flex-col items-center justify-center p-6 font-sans"
->
+<section
+    class="relative w-full h-[100dvh] bg-slate-50 flex flex-col items-center justify-center p-6 font-sans text-slate-900">
 
-    <!-- Navigate back button -->
     <div class="absolute top-8 left-8">
         <button (click)="goBack()"
-            class="group flex items-center gap-2 px-5 py-2.5 
-                text-sm font-bold text-blue-600 bg-white border border-blue-100 
-                rounded-2xl shadow-sm hover:bg-blue-600 hover:text-white transition-all duration-300"
-        >
-            <svg xmlns="http://www.w3.org/2000/svg" 
-                class="w-4 h-4 transition-transform group-hover:-translate-x-1"
-                fill="none" 
-                viewBox="0 0 24 24" 
-                stroke="currentColor"
-            >
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                    d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            class="flex items-center gap-2 text-slate-400 hover:text-slate-900 transition-colors mb-8 group">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 transition-transform group-hover:-translate-x-1" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
             </svg>
-            Go Back
+            <b class="text-xs uppercase tracking-widest">Back to Dashboard</b>
         </button>
     </div>
 
-    <!-- Form intro -->
-    <div class="flex flex-col gap-2 mb-10 text-center">
-        <h2 class="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">
-            Zohee Signatures
+    <div class="flex flex-col gap-1 mb-10 text-center">
+        <h2 class="text-3xl md:text-4xl font-black text-slate-900 uppercase tracking-tighter">
+            {{title}}
         </h2>
-        <p class="text-slate-500 font-medium">
-            Making document signatures digitally easy
+        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em]">
+            Individual Document Dispatch
         </p>
     </div>
 
-    <!-- The FORM -->
     <form [formGroup]="documentForm" (ngSubmit)="onSubmit()"
-        class="w-full max-w-[460px] flex flex-col gap-5 
-            bg-white p-8 md:p-10 rounded-[2.5rem] 
-            shadow-2xl shadow-blue-900/5 border border-slate-100"
-    >
+        class="w-full max-w-[440px] flex flex-col gap-6 bg-white p-10 rounded-none border border-slate-200 shadow-sm">
 
-        <!-- Import File -->
-        <div class="relative group">
-            <label
-                class="flex flex-col items-center justify-center 
-                    w-full h-32 border-2 border-dashed border-slate-200 rounded-3xl 
-                    bg-slate-50 cursor-pointer 
-                    group-hover:border-blue-400 group-hover:bg-blue-50/50 transition-all duration-300"
-            >
-                <div class="flex flex-col items-center justify-center">
-                    <div class="p-3 mb-2 rounded-full bg-white shadow-sm group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                        </svg>
-                    </div>
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Import PDF File</p>
-                </div>
-                <input 
-                    type="file" 
-                    class="hidden" 
-                    formArrayName="file" 
-                    (change)="onFileChange($event)"
-                /> <!-- Input -->
-            </label>
-        </div>
-
-        <!-- Capture document title -->
-        <div class="flex flex-col gap-1.5">
-            <label for="DocTitle" class="text-[13px] font-black text-slate-400 uppercase tracking-widest ml-1">Document
-                Title</label>
-            <input
-                class="px-5 w-full h-14 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 focus:bg-white transition-all placeholder:text-slate-300 text-slate-700"
-                type="text" 
-                id="DocTitle" 
-                placeholder="e.g. Offer Letter" 
-                formControlName="documentTitle"
-            > <!-- Input -->
-        </div>
-
-        <!-- Capture User's name -->
-        <div class="flex flex-col gap-1.5">
-            <label for="UserName" class="text-[13px] font-black text-slate-400 uppercase tracking-widest ml-1">Your
+        <div class="flex flex-col gap-2">
+            <label for="UserName" class="text-[10px] font-black text-slate-500 uppercase tracking-[0.15em]">Full
                 Name</label>
             <input
-                class="px-5 w-full h-14 bg-slate-50 border border-slate-200 rounded-2xl 
-                    focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 focus:bg-white 
-                    transition-all placeholder:text-slate-300 text-slate-700"
-                type="text" 
-                id="UserName" 
-                placeholder="Alexander Agu"
-                formControlName="userName"
-            >
+                class="px-4 w-full h-12 bg-white border border-slate-200 rounded-none focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-all placeholder:text-slate-300 text-sm font-medium"
+                type="text" id="UserName" placeholder="e.g. Alexander Agu" formControlName="userName">
         </div>
 
-        <!-- Capture User's email -->
-        <div class="flex flex-col gap-1.5">
-            <label for="Email" class="text-[13px] font-black text-slate-400 uppercase tracking-widest ml-1">email</label>
+        <div class="flex flex-col gap-2">
+            <label for="Email" class="text-[10px] font-black text-slate-500 uppercase tracking-[0.15em]">Email
+                Address</label>
             <input
-                class="px-5 w-full h-14 bg-slate-50 border border-slate-200 rounded-2xl 
-                focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 focus:bg-white 
-                transition-all placeholder:text-slate-300 text-slate-700"
-                type="tel" 
-                id="Email" 
-                placeholder="employment@gmail.com"
-                formControlName="email"
-            >
+                class="px-4 w-full h-12 bg-white border border-slate-200 rounded-none focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-all placeholder:text-slate-300 text-sm font-medium"
+                type="email" id="Email" placeholder="employment@gmail.com" formControlName="email">
         </div>
 
-        <!-- Capture User's phone number -->
-        <div class="flex flex-col gap-1.5">
-            <label for="Phone" class="text-[13px] font-black text-slate-400 uppercase tracking-widest ml-1">Phone
+        <div class="flex flex-col gap-2">
+            <label for="Phone" class="text-[10px] font-black text-slate-500 uppercase tracking-[0.15em]">Phone
                 Number</label>
             <input
-                class="px-5 w-full h-14 bg-slate-50 border border-slate-200 rounded-2xl 
-                focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 focus:bg-white 
-                transition-all placeholder:text-slate-300 text-slate-700"
-                type="tel" 
-                id="Phone" 
-                placeholder="085 437 21"
-                formControlName="phoneNumber"
-            >
+                class="px-4 w-full h-12 bg-white border border-slate-200 rounded-none focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-all placeholder:text-slate-300 text-sm font-medium"
+                type="tel" id="Phone" placeholder="085 437 21" formControlName="phoneNumber">
         </div>
 
-        <!-- Submit button -->
         <button type="submit"
-            class="mt-4 w-full h-16 bg-blue-600 text-white text-lg font-bold 
-            rounded-2xl shadow-xl shadow-blue-500/30 hover:bg-blue-700 
-            hover:shadow-blue-500/40 hover:-translate-y-0.5 transition-all active:scale-[0.98]"
-        >
-            Send Signature
+            class="mt-4 w-full h-14 bg-blue-600 text-white text-xs font-black uppercase tracking-[0.2em] rounded-none shadow-md shadow-blue-100 hover:bg-blue-700 hover:-translate-y-0.5 transition-all active:scale-[0.98]">
+            Send Signature Request
         </button>
     </form>
 </section>

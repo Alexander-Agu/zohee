@@ -51,4 +51,8 @@ export class PortalComponent implements OnInit {
   setFilter(status: 'all' | 'signed' | 'not-signed') {
     this.filterStatus = status;
   }
+
+  toSendDocument(name: string){
+    this.router.navigate(["send-signature", name])
+  }
 }

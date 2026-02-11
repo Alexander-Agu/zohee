@@ -4,7 +4,6 @@ import {CdkDrag} from '@angular/cdk/drag-drop';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { DocumentApiService } from '../../services/documents/document-api.service';
 import { ActivatedRoute, Route, Router, RouterLink } from '@angular/router';
-import { switchMap } from 'rxjs';
 
 
 @Component({

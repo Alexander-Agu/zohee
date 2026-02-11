@@ -22,7 +22,27 @@ export class DocumentApiService {
 
         const filename = `${name}_${email}_${title}.pdf`;
         
-        this.router.navigate(['pdf-signer', filename]);
+        // this.router.navigate(['pdf-signer', filename]);
+      },
+      error: (err) => {
+        console.error('Upload Error:', err);
+      }
+    });
+  }
+
+
+  PostTemplate(formData: FormData){
+
+    this.http.post('https://localhost:7291/api/documents/create-template', formData).subscribe({
+      next: (res) => {
+        console.log('Upload Success:', res);
+        alert('Template sent successfully!');
+        
+        const title = formData.get("documentTitle");
+
+        const filename = `${title}.pdf`;
+        
+        this.router.navigate(['send-signature', filename]);
       },
       error: (err) => {
         console.error('Upload Error:', err);

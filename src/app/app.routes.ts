@@ -20,7 +20,7 @@ export const routes: Routes = [
         component: PdfSignerComponent
     },
     {
-        path: "send-signature",
+        path: "send-signature/:name",
         component: SendSignatureComponent
     },
     {
