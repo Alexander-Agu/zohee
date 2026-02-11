@@ -57,7 +57,7 @@ export class DocumentApiService {
         console.log('Signed Success:', res);
         alert('Document signed successfully!');
         
-        // this.router.navigate([]);
+        this.router.navigate([""]);
       },
       error: (err) => {
         console.error('Upload Error:', err);
