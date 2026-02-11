@@ -50,13 +50,14 @@ export class UploadComponent implements OnInit {
   onSubmit() {
     if (this.uploadForm.valid) {
       const formData = new FormData();
+      console.log("Just work bruh");
       
       const file = this.uploadForm.get('file')?.value;
       if (file) {
         formData.append('file', file);
       }
 
-      this.documentApi.PostDocument(formData);
+      this.documentApi.SignDocument(formData, this.title);
     } else {
       this.uploadForm.markAllAsTouched();
     }

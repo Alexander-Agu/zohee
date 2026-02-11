@@ -1,0 +1,26 @@
+<section class="w-full h-[100dvh] p-4">
+  <div class="relative w-full h-full">
+
+
+    <pdf-viewer
+    [show-all]="true"
+      [src]="pdfSrc"
+      [render-text]="true"
+      [original-size]="false"
+      style="height: 100%;"
+      >
+    </pdf-viewer>
+
+
+    <div class="absolute inset-0 z-50 pointer-events-none">
+
+      <input
+        type="text"
+        cdkDrag
+        class="absolute p-2 border border-black bg-white pointer-events-auto"
+        style="top: 100px; left: 100px;" />
+
+    </div>
+
+  </div>
+</section>

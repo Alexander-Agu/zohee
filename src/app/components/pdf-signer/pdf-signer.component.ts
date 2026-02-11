@@ -3,7 +3,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import {CdkDrag} from '@angular/cdk/drag-drop';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { DocumentApiService } from '../../services/documents/document-api.service';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Route, Router, RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
 
 
@@ -17,7 +17,8 @@ import { switchMap } from 'rxjs';
 export class PdfSignerComponent implements OnInit {
   constructor(
     private documentApi: DocumentApiService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ){}
 
   title = "";
@@ -32,5 +33,7 @@ export class PdfSignerComponent implements OnInit {
     });
   }
 
-  save(){}
+  toUpload(){
+    this.router.navigate(['upload/', this.title]);
+  }
 }

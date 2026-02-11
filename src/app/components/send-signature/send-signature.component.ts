@@ -15,7 +15,8 @@ export class SendSignatureComponent {
     documentTitle: new FormControl("", [Validators.required]),
     userName: new FormControl("", [Validators.required]),
     phoneNumber: new FormControl("", [Validators.required]),
-    file: new FormControl<File | null>(null, [Validators.required]) 
+    email: new FormControl("", [Validators.required]),
+    file: new FormControl<File | null>(null, [Validators.required])
   });
 
   constructor(
@@ -44,6 +45,7 @@ export class SendSignatureComponent {
       // Map form values to the exact names in your C# [FromForm] attributes
       formData.append('userName', this.documentForm.get('userName')?.value || '');
       formData.append('phoneNumber', this.documentForm.get('phoneNumber')?.value || '');
+      formData.append('email', this.documentForm.get('email')?.value || '');
       formData.append('documentTitle', this.documentForm.get('documentTitle')?.value || '');
       
       const file = this.documentForm.get('file')?.value;

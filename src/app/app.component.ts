@@ -18,7 +18,7 @@ import { UploadComponent } from "./components/upload/upload.component";
     UploadComponent
 ],
   template: `
-    <app-upload />
+    <router-outlet />
   `
 })
 export class AppComponent {}

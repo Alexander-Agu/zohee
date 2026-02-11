@@ -7,7 +7,12 @@ import { UploadComponent } from './components/upload/upload.component';
 export const routes: Routes = [
     {
         path: "",
-        component: PortalComponent
+        component: PortalComponent,
+        children: [
+            // {
+            //     path: "Templates"
+            // }
+        ]
     },
     {
         path: "pdf-signer/:name",
