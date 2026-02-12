@@ -21,10 +21,18 @@ export class PdfSignerComponent implements OnInit {
   ){}
 
   title = "";
+  documentId = 0;
+  userEmail = "";
+  userId = 0;
   pdfSrc = ""
 
   ngOnInit(): void {
     this.title = this.route.snapshot.paramMap.get('name') ?? '';
+    const documentIdNum = this.route.snapshot.paramMap.get('documentId') ?? '';
+    this.documentId = Number(documentIdNum);
+    this.userEmail = this.route.snapshot.paramMap.get('email') ?? '';
+    const id = this.route.snapshot.paramMap.get('userId') ?? '';
+    this.userId = Number(id)
 
     this.documentApi.getDocumentPdf(this.title)
       .subscribe((blob: Blob) => {
@@ -32,7 +40,10 @@ export class PdfSignerComponent implements OnInit {
     });
   }
 
-  toUpload(){
-    this.router.navigate(['upload/', this.title]);
+toUpload() {
+    if (this.title && this.documentId && this.userEmail) {
+      // Use this.documentId instead of this.documentApi
+      this.router.navigate(['upload', this.userEmail, this.documentId, this.userId, this.title]);
+    }
   }
 }

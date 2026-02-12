@@ -20,7 +20,7 @@ export class DocumentApiService {
         const email = formData.get("email");
         const title = formData.get("documentTitle");
 
-        const filename = `${name}_${email}_${title}.pdf`;
+        const filename = `${res}.pdf`;
         
         // this.router.navigate(['pdf-signer', filename]);
       },
@@ -30,29 +30,8 @@ export class DocumentApiService {
     });
   }
 
-
-  PostTemplate(formData: FormData){
-
-    this.http.post('https://localhost:7291/api/documents/create-template', formData).subscribe({
-      next: (res) => {
-        console.log('Upload Success:', res);
-        alert('Template sent successfully!');
-        
-        const title = formData.get("documentTitle");
-
-        const filename = `${title}.pdf`;
-        
-        this.router.navigate(['send-signature', filename]);
-      },
-      error: (err) => {
-        console.error('Upload Error:', err);
-      }
-    });
-  }
-
-
-  SignDocument(formData: FormData, filename: string){
-    this.http.put(`https://localhost:7291/api/documents/sign/${filename}`, formData).subscribe({
+  SignDocument(formData: FormData, filename: string, id: number, userId: number, email: string){
+    this.http.put(`https://localhost:7291/api/documents/sign/${email}/${id}/${userId}/${filename}`, formData).subscribe({
       next: (res) => {
         console.log('Signed Success:', res);
         alert('Document signed successfully!');
@@ -68,6 +47,13 @@ export class DocumentApiService {
   getDocumentPdf(filename: string) {
     return this.http.get(
       `https://localhost:7291/api/documents/file/${filename}`,
+      { responseType: 'blob' }
+    );
+  }
+
+  getInitialDocumentPdf(filename: string) {
+    return this.http.get(
+      `https://localhost:7291/api/documents/initial-file/${filename}`,
       { responseType: 'blob' }
     );
   }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common'; // Important for @if and @for
 import { DocumentApiService } from '../../services/documents/document-api.service';
+import { TemplateApiService } from '../../services/Template/template-api.service';
 
 @Component({
   selector: 'app-portal',
@@ -12,14 +13,23 @@ import { DocumentApiService } from '../../services/documents/document-api.servic
 })
 export class PortalComponent implements OnInit {
   documents: any[] = [];
+  templates: any[] = [];
   filterStatus: 'all' | 'signed' | 'not-signed' = 'all';
   viewMode: 'documents' | 'templates' = 'documents';
 
-  constructor(private documentApi: DocumentApiService, private router: Router) {}
+  constructor(
+    private documentApi: DocumentApiService,
+    private templateApi: TemplateApiService, 
+    private router: Router) {}
 
   ngOnInit(): void {
     this.documentApi.getAllDocument().subscribe((docs) => {
+      console.log(docs);
       this.documents = docs;
+    });
+
+    this.templateApi.getAllTemplates().subscribe(docs => {
+      this.templates = docs;
     });
   }
 
@@ -41,7 +51,7 @@ export class PortalComponent implements OnInit {
 
   // Simulated list for templates
   get onlyTemplates() {
-    return this.documents.filter(x => x.isTemplate);
+    return this.templates;
   }
 
   setView(mode: 'documents' | 'templates') {

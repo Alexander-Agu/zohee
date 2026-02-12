@@ -18,6 +18,9 @@ export class UploadComponent implements OnInit {
   });
 
   title = "";
+  documentId = 0;
+  userEmail = "";
+  userId = 0;
   pdfSrc = ""
 
   constructor(
@@ -28,6 +31,11 @@ export class UploadComponent implements OnInit {
 
   ngOnInit(): void {
     this.title = this.route.snapshot.paramMap.get('name') ?? '';
+    const documentIdNum = this.route.snapshot.paramMap.get('documentId') ?? '';
+    this.documentId = Number(documentIdNum);
+    this.userEmail = this.route.snapshot.paramMap.get('email') ?? '';
+    const id = this.route.snapshot.paramMap.get('userId') ?? '';
+    this.userId = Number(id)
 
     this.documentApi.getDocumentPdf(this.title)
       .subscribe((blob: Blob) => {
@@ -57,7 +65,7 @@ export class UploadComponent implements OnInit {
         formData.append('file', file);
       }
 
-      this.documentApi.SignDocument(formData, this.title);
+      this.documentApi.SignDocument(formData, this.title,  this.documentId, this.userId,this.userEmail);
     } else {
       this.uploadForm.markAllAsTouched();
     }

@@ -7,6 +7,7 @@ import {
   Validators,
   ReactiveFormsModule
 } from '@angular/forms';
+import { TemplateApiService } from '../../services/Template/template-api.service';
 
 @Component({
   selector: 'app-templaate',
@@ -18,13 +19,13 @@ import {
 export class TemplaateComponent {
 
   templateForm = new FormGroup({
-    documentTitle: new FormControl('', [Validators.required]),
+    templateTitle: new FormControl('', [Validators.required]),
     file: new FormControl<File | null>(null, [Validators.required])
   });
 
   constructor(
     private location: Location,
-    private documentApi: DocumentApiService
+    private templateApi: TemplateApiService
   ) {}
 
   goBack(): void {
@@ -52,8 +53,8 @@ export class TemplaateComponent {
     const formData = new FormData();
 
     formData.append(
-      'documentTitle',
-      this.templateForm.get('documentTitle')?.value ?? ''
+      'templateTitle',
+      this.templateForm.get('templateTitle')?.value ?? ''
     );
 
     const file = this.templateForm.get('file')?.value;
@@ -61,6 +62,6 @@ export class TemplaateComponent {
       formData.append('file', file);
     }
 
-    this.documentApi.PostTemplate(formData);
+    this.templateApi.PostTemplate(formData);
   }
 }

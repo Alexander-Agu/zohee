@@ -16,6 +16,10 @@ export const routes: Routes = [
         ]
     },
     {
+        path: "pdf-signer/:email/:documentId/:userId/:name",
+        component: PdfSignerComponent
+    },
+    {
         path: "pdf-signer/:name",
         component: PdfSignerComponent
     },
@@ -24,7 +28,7 @@ export const routes: Routes = [
         component: SendSignatureComponent
     },
     {
-        path: "upload/:name",
+        path: "upload/:email/:documentId/:userId/:name",
         component: UploadComponent
     },
     {
