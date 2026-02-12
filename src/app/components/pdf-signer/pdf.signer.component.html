@@ -1,56 +1,64 @@
-<div class="flex flex-col w-full h-[100dvh] bg-slate-100 overflow-hidden font-sans text-slate-900">
+<main class="flex-grow w-full bg-[#f1f5f9] p-6 md:p-10 font-sans text-slate-900">
+  <div class="w-full h-full bg-white rounded-none shadow-sm border border-slate-200 overflow-hidden flex flex-col">
 
-  <header class="w-full min-h-20 px-10 flex items-center justify-between bg-white border-b border-slate-200 z-10 shadow-sm">
-    
-    <div class="flex items-center gap-5">
-      <div class="w-11 h-11 bg-slate-900 flex items-center justify-center rounded-none shadow-sm">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-        </svg>
+    <div class="p-3 border-b border-slate-200 bg-white flex justify-between items-center">
+      <div class="flex items-center gap-4">
+        <span class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Zohee Signatures</span>
+        <h2 class="text-sm font-bold text-slate-800 border-l border-slate-200 pl-4">{{title}}</h2>
       </div>
-      <div>
-        <h2 class="text-sm font-black text-slate-900 uppercase tracking-tight">
-          {{ title || 'Untitled Document' }}
-        </h2>
-        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Live Review Mode</p>
-      </div>
-    </div>
 
-    <div class="hidden lg:block max-w-[300px]">
-      <p class="text-[9px] font-bold text-slate-400 uppercase leading-relaxed tracking-widest text-right">
-        Download the updated PDF before moving to the upload stage
-      </p>
-    </div>
+      <div class="flex gap-4 items-center">
+        <a routerLink="" [class.hidden]="viewHome"
+          class="flex items-center gap-2 px-4 py-2 text-[10px] font-black text-slate-600 uppercase tracking-widest bg-white border border-slate-200 rounded-none hover:bg-slate-50 transition-all active:scale-95">
 
-    <div class="flex items-center gap-3">
-      <a routerLink="" [class.hidden]="viewHome"
-        class="flex items-center gap-2 px-4 py-2 text-[10px] font-black text-slate-600 uppercase tracking-widest bg-white border border-slate-200 rounded-none hover:bg-slate-50 transition-all active:scale-95">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+          </svg>
+          Home
+        </a>
 
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-        </svg>
-        Home
-      </a>
+        <button (click)="showPopup = true"
+          class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-black uppercase tracking-widest transition-all active:scale-95 shadow-sm">
+          Upload Document
+        </button>
       
-      <button [class.hidden]="!viewHome" (click)="toUpload()" class="px-5 py-2 bg-blue-600 text-white text-[10px] font-black uppercase tracking-widest rounded-none shadow-md shadow-blue-100 hover:bg-blue-700 transition-all active:scale-95">
-        Proceed to upload
-      </button>
-    </div>
-  </header>
+      </div>
 
-  <main class="flex-grow w-full bg-[#f1f5f9] p-6 md:p-10">
-    <div class="w-full h-full bg-white rounded-none shadow-sm border border-slate-200 overflow-hidden">
+    </div>
+
+    <div class="flex-1">
       <ngx-extended-pdf-viewer 
+        #pdfViewer 
         [src]="pdfSrc" 
-        [showSidebarButton]="false" 
-        [showSecondaryToolbarButton]="true"
-        [theme]="'light'" 
-        [height]="'100%'" 
-        backgroundColor="#f8fafc">
+        (pdfLoaded)="onPdfLoaded()" 
+        [height]="'100%'"
+        [showSidebarButton]="false"
+        [theme]="'light'"
+        backgroundColor="#f1f5f9">
       </ngx-extended-pdf-viewer>
     </div>
-  </main>
+  </div>
 
-</div>
+  @if (showPopup) {
+  <div class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-6">
+    <div class="w-full max-w-sm bg-white p-8 border border-slate-200 shadow-2xl rounded-none">
+      <h3 class="text-xs font-black uppercase tracking-widest text-slate-400 mb-2">Confirmation</h3>
+      <p class="text-sm font-bold text-slate-800 mb-8 leading-relaxed">
+        Are you sure you want to upload your signed document?
+      </p>
+
+      <div class="flex gap-3">
+        <button (click)="onSubmit()"
+          class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 text-[10px] font-black uppercase tracking-widest transition-all">
+          Yes, Upload
+        </button>
+        <button (click)="showPopup = false"
+          class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-600 py-3 text-[10px] font-black uppercase tracking-widest transition-all">
+          No, Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+  }
+</main>

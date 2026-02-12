@@ -1,55 +1,90 @@
-import { Component, OnInit } from '@angular/core';
-import { PdfViewerModule } from 'ng2-pdf-viewer';
-import {CdkDrag} from '@angular/cdk/drag-drop';
-import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  NgxExtendedPdfViewerModule,
+  NgxExtendedPdfViewerComponent,
+  NgxExtendedPdfViewerService
+} from 'ngx-extended-pdf-viewer';
+import { CdkDrag } from '@angular/cdk/drag-drop';
 import { DocumentApiService } from '../../services/documents/document-api.service';
-import { ActivatedRoute, Route, Router, RouterLink } from '@angular/router';
-
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-pdf-signer',
   standalone: true,
-  imports: [PdfViewerModule, CdkDrag, NgxExtendedPdfViewerModule, RouterLink],
-  templateUrl: "pdf.signer.component.html",
+  imports: [NgxExtendedPdfViewerModule, CdkDrag, RouterLink],
+  templateUrl: "./pdf.signer.component.html",
   styleUrl: './pdf-signer.component.css'
 })
 export class PdfSignerComponent implements OnInit {
-  constructor(
-    private documentApi: DocumentApiService,
-    private route: ActivatedRoute,
-    private router: Router
-  ){}
 
-  viewHome = false;
+  @ViewChild('pdfViewer')
+  pdfViewer!: NgxExtendedPdfViewerComponent;
 
   title = "";
   documentId = 0;
   userEmail = "";
   userId = 0;
-  pdfSrc = ""
+  pdfSrc = "";
+  isPdfReady = false;
+
+  viewHome = false;
+  
+  // UI State
+  showPopup = false;
+
+  constructor(
+    private documentApi: DocumentApiService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private pdfViewerService: NgxExtendedPdfViewerService
+  ) {}
 
   ngOnInit(): void {
     this.title = this.route.snapshot.paramMap.get('name') ?? '';
-    const documentIdNum = this.route.snapshot.paramMap.get('documentId') ?? '';
-    this.documentId = Number(documentIdNum);
+    this.documentId = Number(this.route.snapshot.paramMap.get('documentId') ?? 0);
     this.userEmail = this.route.snapshot.paramMap.get('email') ?? '';
-    const id = this.route.snapshot.paramMap.get('userId') ?? '';
-    this.userId = Number(id)
-
-    // if a user is found the cannot navigate to dashboard
-    if (id === "") this.viewHome = false;
-    else this.viewHome = true;
+    this.userId = Number(this.route.snapshot.paramMap.get('userId') ?? 0);
 
     this.documentApi.getDocumentPdf(this.title)
       .subscribe((blob: Blob) => {
         this.pdfSrc = URL.createObjectURL(blob);
-    });
+      });
+
+    // if a user is found the cannot navigate to dashboard
+    if (this.userId === 0) this.viewHome = false;
+    else this.viewHome = true;
   }
 
-toUpload() {
-    if (this.title && this.documentId && this.userEmail) {
-      // Use this.documentId instead of this.documentApi
-      this.router.navigate(['upload', this.userEmail, this.documentId, this.userId, this.title]);
+
+  onPdfLoaded() {
+    this.isPdfReady = true;
+  }
+
+  async onSubmit() {
+    try {
+      const formData = new FormData();
+      const blob = await this.pdfViewerService.getCurrentDocumentAsBlob();
+
+      if (!blob) {
+        throw new Error('Failed to retrieve document');
+      }
+
+      formData.append('file', blob, 'signed.pdf');
+
+      await this.documentApi.SignDocument(
+        formData,
+        this.title,
+        this.documentId,
+        this.userId,
+        this.userEmail,
+      );
+      
+      this.showPopup = false;
+      this.router.navigate(['/documents']); // Success redirect
+
+    } catch (err) {
+      console.error(err);
+      this.showPopup = false;
     }
   }
 }

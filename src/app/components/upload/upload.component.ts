@@ -3,11 +3,12 @@ import { FormGroup, FormControl, Validators, ReactiveFormsModule, ɵInternalForm
 import { DocumentApiService } from '../../services/documents/document-api.service';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgxExtendedPdfViewerModule } from "ngx-extended-pdf-viewer";
 
 
 @Component({
   selector: 'app-upload',
-  imports: [ɵInternalFormsSharedModule, ReactiveFormsModule],
+  imports: [ɵInternalFormsSharedModule, ReactiveFormsModule, NgxExtendedPdfViewerModule],
   templateUrl: "./upload.component.html",
   styleUrl: './upload.component.css'
 })
