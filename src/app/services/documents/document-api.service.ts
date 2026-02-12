@@ -33,10 +33,9 @@ export class DocumentApiService {
   SignDocument(formData: FormData, filename: string, id: number, userId: number, email: string){
     this.http.put(`https://localhost:7291/api/documents/sign/${email}/${id}/${userId}/${filename}`, formData).subscribe({
       next: (res) => {
-        console.log('Signed Success:', res);
         alert('Document signed successfully!');
         
-        this.router.navigate([""]);
+        this.router.navigate(["complete"]);
       },
       error: (err) => {
         console.error('Upload Error:', err);

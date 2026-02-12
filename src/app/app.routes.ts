@@ -4,6 +4,7 @@ import { PdfSignerComponent } from './components/pdf-signer/pdf-signer.component
 import { SendSignatureComponent } from './components/send-signature/send-signature.component';
 import { UploadComponent } from './components/upload/upload.component';
 import { TemplaateComponent } from './components/templaate/templaate.component';
+import { CompleteComponent } from './components/complete/complete.component';
 
 export const routes: Routes = [
     {
@@ -34,5 +35,9 @@ export const routes: Routes = [
     {
         path: "template",
         component: TemplaateComponent
+    },
+    {
+        path: "complete",
+        component: CompleteComponent
     }
 ];

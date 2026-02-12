@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule, ɵInternalFormsSharedModule } from '@angular/forms';
 import { DocumentApiService } from '../../services/documents/document-api.service';
 import { Location } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -26,7 +26,8 @@ export class UploadComponent implements OnInit {
   constructor(
     private documentApi: DocumentApiService,
     private location: Location,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -66,6 +67,7 @@ export class UploadComponent implements OnInit {
       }
 
       this.documentApi.SignDocument(formData, this.title,  this.documentId, this.userId,this.userEmail);
+      // this.router.navigate(["complete"]);
     } else {
       this.uploadForm.markAllAsTouched();
     }
