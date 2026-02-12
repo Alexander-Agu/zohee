@@ -20,6 +20,8 @@ export class PdfSignerComponent implements OnInit {
     private router: Router
   ){}
 
+  viewHome = false;
+
   title = "";
   documentId = 0;
   userEmail = "";
@@ -33,6 +35,10 @@ export class PdfSignerComponent implements OnInit {
     this.userEmail = this.route.snapshot.paramMap.get('email') ?? '';
     const id = this.route.snapshot.paramMap.get('userId') ?? '';
     this.userId = Number(id)
+
+    // if a user is found the cannot navigate to dashboard
+    if (id === "") this.viewHome = false;
+    else this.viewHome = true;
 
     this.documentApi.getDocumentPdf(this.title)
       .subscribe((blob: Blob) => {
