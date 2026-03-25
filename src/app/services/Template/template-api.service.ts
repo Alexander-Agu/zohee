@@ -12,7 +12,7 @@ export class TemplateApiService {
 
     PostTemplate(formData: FormData){
 
-    this.http.post('http://zohee.runasp.net/api/Template/create-template', formData).subscribe({
+    this.http.post('https://zohee.runasp.net/api/Template/create-template', formData).subscribe({
       next: (res) => {
         console.log('Upload Success:', res);
         alert('Template sent successfully!');
@@ -31,13 +31,13 @@ export class TemplateApiService {
 
   getTemplatePdf(filename: string) {
     return this.http.get(
-      `http://zohee.runasp.net/api/template/file/${filename}`,
+      `https://zohee.runasp.net/api/template/file/${filename}`,
       { responseType: 'blob' }
     );
   }
 
   getAllTemplates() {
-    return this.http.get<Template[]>(`http://zohee.runasp.net/api/template/`);
+    return this.http.get<Template[]>(`https://zohee.runasp.net/api/template/`);
   }
 }
 
