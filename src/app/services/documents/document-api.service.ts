@@ -11,7 +11,7 @@ export class DocumentApiService {
 
   PostDocument(formData: FormData){
 
-    this.http.post('https://localhost:7291/api/documents/upload', formData).subscribe({
+    this.http.post('http://zohee.runasp.net/api/documents/upload', formData).subscribe({
       next: (res) => {
         console.log('Upload Success:', res);
         alert('Document sent successfully!');
@@ -31,7 +31,7 @@ export class DocumentApiService {
   }
 
   SignDocument(formData: FormData, filename: string, id: number, userId: number, email: string){
-    this.http.put(`https://localhost:7291/api/documents/sign/${email}/${id}/${userId}/${filename}`, formData).subscribe({
+    this.http.put(`http://zohee.runasp.net/api/documents/sign/${email}/${id}/${userId}/${filename}`, formData).subscribe({
       next: (res) => {
         alert('Document signed successfully!');
         
@@ -45,20 +45,20 @@ export class DocumentApiService {
 
   getDocumentPdf(filename: string) {
     return this.http.get(
-      `https://localhost:7291/api/documents/file/${filename}`,
+      `http://zohee.runasp.net/api/documents/file/${filename}`,
       { responseType: 'blob' }
     );
   }
 
   getInitialDocumentPdf(filename: string) {
     return this.http.get(
-      `https://localhost:7291/api/documents/initial-file/${filename}`,
+      `http://zohee.runasp.net/api/documents/initial-file/${filename}`,
       { responseType: 'blob' }
     );
   }
 
   getAllDocument() {
-    return this.http.get<Document[]>(`https://localhost:7291/api/documents/`);
+    return this.http.get<Document[]>(`http://zohee.runasp.net/api/documents/`);
   }
 
 }
