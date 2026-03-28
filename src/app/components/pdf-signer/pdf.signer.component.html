@@ -1,61 +1,78 @@
-<main class="flex-grow w-full bg-[#f1f5f9] p-6 md:p-10 font-sans text-slate-900">
-  <div class="w-full h-full bg-white rounded-none shadow-sm border border-slate-200 overflow-hidden flex flex-col">
+<main class="w-full h-[100dvh] bg-[#f1f5f9] p-0 md:p-6 lg:p-10 font-sans text-slate-900 flex flex-col">
+  <div class="flex-1 bg-white rounded-none shadow-sm md:border border-slate-200 overflow-hidden flex flex-col">
 
-    <div class="p-3 border-b border-slate-200 bg-white flex justify-between items-center">
-      <div class="flex items-center gap-4">
-        <span class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Zohee Signatures</span>
-        <h2 class="text-sm font-bold text-slate-800 border-l border-slate-200 pl-4">{{title}}</h2>
+    <div class="h-14 md:h-16 p-3 border-b border-slate-200 bg-white flex justify-between items-center shrink-0">
+      <div class="flex items-center gap-2 md:gap-4 overflow-hidden">
+        <span class="hidden xs:inline text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 whitespace-nowrap">Zohee</span>
+        <h2 class="text-[11px] md:text-sm font-bold text-slate-800 border-l border-slate-200 pl-2 md:pl-4 truncate max-w-[150px] md:max-w-none">
+            {{title}}
+        </h2>
       </div>
 
-      <div class="flex gap-4 items-center">
+      <div class="flex gap-2 md:gap-4 items-center">
         <a routerLink="" [class.hidden]="viewHome"
-          class="flex items-center gap-2 px-4 py-2 text-[10px] font-black text-slate-600 uppercase tracking-widest bg-white border border-slate-200 rounded-none hover:bg-slate-50 transition-all active:scale-95">
-
+          class="flex items-center gap-2 px-3 md:px-4 py-2 text-[10px] font-black text-slate-600 uppercase tracking-widest bg-white border border-slate-200 hover:bg-slate-50 transition-all active:scale-95">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
           </svg>
-          Home
+          <span class="hidden sm:inline">Home</span>
         </a>
 
         <button (click)="showPopup = true"
-          class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-black uppercase tracking-widest transition-all active:scale-95 shadow-sm">
+          class="hidden md:block px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-black uppercase tracking-widest transition-all active:scale-95 shadow-sm">
           Upload Document
         </button>
-      
       </div>
-
     </div>
 
-    <div class="flex-1">
-      <ngx-extended-pdf-viewer 
-        #pdfViewer 
-        [src]="pdfSrc" 
-        (pdfLoaded)="onPdfLoaded()" 
-        [height]="'100%'"
-        [showSidebarButton]="false"
-        [theme]="'light'"
-        backgroundColor="#f1f5f9">
-      </ngx-extended-pdf-viewer>
+<div class="flex-1 relative">
+  <ngx-extended-pdf-viewer 
+    #pdfViewer 
+    [src]="pdfSrc" 
+    (pdfLoaded)="onPdfLoaded()" 
+    [height]="'100%'"
+    [theme]="'light'"
+    backgroundColor="#f1f5f9"
+
+    [showSidebarButton]="false"
+    [showSecondaryToolbarButton]="false"
+    
+    [showPagingButtons]="true"
+    [showZoomButtons]="true"
+
+    [showDrawEditor]="true"        [showTextEditor]="true"        [showHighlightEditor]="true"   [showPrintButton]="false"
+    [showDownloadButton]="false"
+    [showOpenFileButton]="false"
+    [showPresentationModeButton]="false"
+    [showFindButton]="false"
+  >
+  </ngx-extended-pdf-viewer>
+
+      <button (click)="showPopup = true"
+        class="md:hidden fixed bottom-6 right-6 w-14 h-14 bg-blue-600 text-white rounded-full shadow-2xl flex items-center justify-center active:scale-90 transition-transform z-40">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+        </svg>
+      </button>
     </div>
   </div>
 
   @if (showPopup) {
-  <div class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-6">
-    <div class="w-full max-w-sm bg-white p-8 border border-slate-200 shadow-2xl rounded-none">
-      <h3 class="text-xs font-black uppercase tracking-widest text-slate-400 mb-2">Confirmation</h3>
+  <div class="fixed inset-0 z-50 flex items-end md:items-center justify-center bg-slate-900/60 backdrop-blur-sm p-0 md:p-6">
+    <div class="w-full max-w-sm bg-white p-8 border-t md:border border-slate-200 shadow-2xl rounded-t-2xl md:rounded-none animate-in slide-in-from-bottom duration-300">
+      <h3 class="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-2">Final Step</h3>
       <p class="text-sm font-bold text-slate-800 mb-8 leading-relaxed">
         Are you sure you want to upload your signed document?
       </p>
 
-      <div class="flex gap-3">
+      <div class="flex flex-col md:flex-row gap-3">
         <button (click)="onSubmit()"
-          class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 text-[10px] font-black uppercase tracking-widest transition-all">
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 md:py-3 text-[10px] font-black uppercase tracking-widest transition-all order-1 md:order-2">
           Yes, Upload
         </button>
         <button (click)="showPopup = false"
-          class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-600 py-3 text-[10px] font-black uppercase tracking-widest transition-all">
-          No, Cancel
+          class="w-full bg-slate-100 hover:bg-slate-200 text-slate-600 py-4 md:py-3 text-[10px] font-black uppercase tracking-widest transition-all order-2 md:order-1">
+          Cancel
         </button>
       </div>
     </div>

@@ -1,6 +1,27 @@
-pdf-viewer,
-.ng2-pdf-viewer-container,
-.pdfViewer {
-  overflow: visible !important;
+/* Force the PDF toolbar to wrap on mobile so buttons don't disappear */
+:host ::ng-deep #toolbarViewerMiddle {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: center !important;
+}
+
+:host ::ng-deep .toolbar {
   height: auto !important;
+  min-height: 32px;
+}
+
+/* Make the annotation buttons (Sign, Text, Highlight) larger on mobile */
+@media (max-width: 640px) {
+  :host ::ng-deep .toolbarButton {
+    margin: 4px !important;
+    scale: 1.2;
+    /* Makes buttons easier to hit with fingers */
+  }
+
+  :host ::ng-deep #toolbarViewerRight {
+    float: none !important;
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+  }
 }

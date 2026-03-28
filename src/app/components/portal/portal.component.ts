@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { CommonModule } from '@angular/common'; // Important for @if and @for
+import { CommonModule } from '@angular/common';
 import { DocumentApiService } from '../../services/documents/document-api.service';
 import { TemplateApiService } from '../../services/Template/template-api.service';
 
@@ -16,15 +16,18 @@ export class PortalComponent implements OnInit {
   templates: any[] = [];
   filterStatus: 'all' | 'signed' | 'not-signed' = 'all';
   viewMode: 'documents' | 'templates' = 'documents';
+  
+  
+  isMenuOpen = false;
 
   constructor(
     private documentApi: DocumentApiService,
     private templateApi: TemplateApiService, 
-    private router: Router) {}
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.documentApi.getAllDocument().subscribe((docs) => {
-      console.log(docs);
       this.documents = docs;
     });
 
@@ -37,19 +40,18 @@ export class PortalComponent implements OnInit {
     this.router.navigate(["pdf-signer", name]);
   }
 
-  toTemplate(){[
-    this.router.navigate(["template"])
-  ]}
+ 
+  toTemplate(){
+    this.router.navigate(["template"]);
+  }
 
-// Filtered list for documents only
   get filteredDocuments() {
-    const docs = this.documents.filter(d => !d.isTemplate); // Future logic
+    const docs = this.documents.filter(d => !d.isTemplate);
     if (this.filterStatus === 'signed') return docs.filter(d => d.isSigned);
     if (this.filterStatus === 'not-signed') return docs.filter(d => !d.isSigned);
     return docs;
   }
 
-  // Simulated list for templates
   get onlyTemplates() {
     return this.templates;
   }
@@ -63,6 +65,6 @@ export class PortalComponent implements OnInit {
   }
 
   toSendDocument(name: string){
-    this.router.navigate(["send-signature", name])
+    this.router.navigate(["send-signature", name]);
   }
 }

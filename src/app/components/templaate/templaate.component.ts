@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
-import { DocumentApiService } from '../../services/documents/document-api.service';
-import {
-  FormControl,
-  FormGroup,
-  Validators,
-  ReactiveFormsModule
+import { 
+  FormControl, 
+  FormGroup, 
+  Validators, 
+  ReactiveFormsModule 
 } from '@angular/forms';
 import { TemplateApiService } from '../../services/Template/template-api.service';
 
@@ -28,11 +27,15 @@ export class TemplaateComponent {
     private templateApi: TemplateApiService
   ) {}
 
+  // NEW: Getter to help the HTML show the "File Ready" state
+  get selectedFile(): File | null {
+    return this.templateForm.get('file')?.value || null;
+  }
+
   goBack(): void {
     this.location.back();
   }
 
-  // capture file properly
   onFileChange(event: Event): void {
     const input = event.target as HTMLInputElement;
 
@@ -40,24 +43,26 @@ export class TemplaateComponent {
       this.templateForm.patchValue({
         file: input.files[0]
       });
+      // Trigger validation check
+      this.templateForm.get('file')?.updateValueAndValidity();
     }
   }
 
   createTemplate(): void {
-
-    if (!this.templateForm.valid) {
+    if (this.templateForm.invalid) {
       this.templateForm.markAllAsTouched();
       return;
     }
 
     const formData = new FormData();
-
+    
+    // Using non-null assertion since we checked validity above
     formData.append(
       'templateTitle',
-      this.templateForm.get('templateTitle')?.value ?? ''
+      this.templateForm.get('templateTitle')?.value!
     );
 
-    const file = this.templateForm.get('file')?.value;
+    const file = this.selectedFile;
     if (file) {
       formData.append('file', file);
     }
